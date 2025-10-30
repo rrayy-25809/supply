@@ -32,15 +32,17 @@ body {
 }
 
 .messages {
-    flex: 1;
+    max-height: calc(100vh - 250px);
+    height: 100%;
+    margin-bottom: 10px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 12px;
-    margin-bottom: 16px;
 }
 
 .chat-input-area {
+    flex-shrink: 0;
     display: flex;
     gap: 10px;
 }

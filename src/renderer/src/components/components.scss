@@ -18,7 +18,6 @@
     .panel-content {
         flex: 1;
         padding: 16px;
-        overflow: auto;
     }
 }
 
@@ -194,17 +193,17 @@
     max-width: 80%;
     line-height: 1.5;
     font-size: 13px;
-}
 
-.message.user {
-    align-self: flex-end;
-    background: #0e639c;
-    color: #ffffff;
-}
-
-.message.agent {
-    align-self: flex-start;
-    background: #2d2d30;
-    color: #cccccc;
-    border: 1px solid #3e3e42;
+    &.user {
+        align-self: flex-end;
+        background: #0e639c;
+        color: #ffffff;
+    }
+    
+    &.agent {
+        align-self: flex-start;
+        background: #2d2d30;
+        color: #cccccc;
+        border: 1px solid #3e3e42;
+    }
 }
