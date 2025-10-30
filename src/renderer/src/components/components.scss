@@ -1,0 +1,210 @@
+
+.panel {
+    background: #1e1e1e;
+    display: flex;
+    flex-direction: column;
+
+    .panel-header {
+        padding: 10px 16px;
+        background: #2d2d30;
+        border-bottom: 1px solid #3e3e42;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #858585;
+    }
+    
+    .panel-content {
+        flex: 1;
+        padding: 16px;
+        overflow: auto;
+    }
+}
+
+.sidebar {
+    width: 280px;
+    background: #252526;
+    border-right: 1px solid #3e3e42;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+
+    .logo {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 40px;
+        color: #4ec9b0;
+        letter-spacing: -0.5px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .section-title {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #858585;
+        margin-bottom: 12px;
+        font-weight: 600;
+    }
+}
+
+.folder-section {
+    margin-bottom: 30px;
+
+    .folder-btn {
+        width: 100%;
+        padding: 10px 14px;
+        background: #2d2d30;
+        border: 1px solid #3e3e42;
+        border-radius: 4px;
+        color: #cccccc;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    
+        &:hover {
+            background: #37373d;
+            border-color: #4e4e52;
+        }
+    }
+}
+
+.git-section {
+    margin-top: auto;
+
+    .git-controls {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-top: 12px;
+    
+        .git-btn {
+            padding: 8px 10px;
+            background: #2d2d30;
+            border: 1px solid #3e3e42;
+            border-radius: 4px;
+            color: #cccccc;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        
+            &:hover {
+                background: #37373d;
+                border-color: #007acc;
+            }
+        }
+    }
+}
+
+.header {
+    background: #2d2d30;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #3e3e42;
+
+    .status-indicator {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 13px;
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4ec9b0;
+            animation: pulse 2s infinite;
+        }
+    }
+    
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+}
+
+
+.api-config {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    .api-select {
+        padding: 6px 5px;
+        background: #3c3c3c;
+        border: 1px solid #3e3e42;
+        border-radius: 3px;
+        color: #cccccc;
+        font-size: 13px;
+        cursor: pointer;
+    
+        &:focus {
+            outline: none;
+            border-color: #007acc;
+        }
+    }
+
+    .api-input {
+        padding: 6px 12px;
+        background: #3c3c3c;
+        border: 1px solid #3e3e42;
+        border-radius: 3px;
+        color: #cccccc;
+        font-size: 13px;
+        width: 220px;
+    
+        &::placeholder {
+            color: #858585;
+        }
+        
+        &:focus {
+            outline: none;
+            border-color: #007acc;
+        }
+    }
+    
+    .api-save-btn {
+        padding: 6px 16px;
+        background: #0e639c;
+        border: none;
+        border-radius: 3px;
+        color: #ffffff;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    
+        &:hover {
+            background: #1177bb;
+        }
+    }
+}
+
+.message {
+    padding: 10px 14px;
+    border-radius: 4px;
+    max-width: 80%;
+    line-height: 1.5;
+    font-size: 13px;
+}
+
+.message.user {
+    align-self: flex-end;
+    background: #0e639c;
+    color: #ffffff;
+}
+
+.message.agent {
+    align-self: flex-start;
+    background: #2d2d30;
+    color: #cccccc;
+    border: 1px solid #3e3e42;
+}
