@@ -1,7 +1,8 @@
-import { app, shell, BrowserWindow, ipcMain, dialog } from 'electron'
-import { join } from 'path'
-import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import icon from '../../resources/icon.png?asset'
+import { app, shell, BrowserWindow, ipcMain, dialog } from 'electron';
+import { electronApp, optimizer, is } from '@electron-toolkit/utils';
+import icon from '../../resources/icon.png?asset';
+import { setfolder } from './process_manager';
+import { join } from 'path';
 
 function createWindow(): void {
   // Create the browser window.
@@ -64,6 +65,12 @@ app.whenReady().then(() => {
     } else {
       return filePaths[0]
     }
+  })
+  ipcMain.on('set_project_folder', (event, folderPath) => {
+    console.log('Project folder set to:', folderPath);
+    setfolder(folderPath, event);
+    event.sender.send('reply', `프로젝트 폴더가 설정되었습니다: ${folderPath}`);
+    //event.sender.send('', );
   })
 
   createWindow()

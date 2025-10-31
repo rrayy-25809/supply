@@ -8,6 +8,7 @@ function App(): React.JSX.Element {
   const [messages, setMessages] = useState<Array<{ type: string; text: string }>>([
     { type: "agent", text: "👋 안녕하세요! Supply AI 에이전트입니다. 프로젝트 파일을 수정하거나 개발을 도와드릴 수 있습니다. API Key를 설정한 후, 폴더를 열어 시작하세요" }
   ]);
+  const [url, setUrl] = useState<string>("./preview.html");
 
   const send = (text:string): void => {
     window.electron.ipcRenderer.send('send', text);
@@ -20,6 +21,7 @@ function App(): React.JSX.Element {
     };
     
     window.electron.ipcRenderer.on('reply', handleReply);
+    window.electron.ipcRenderer.on('get_url', (_, url:string) => setUrl(url));
     
     // cleanup 함수로 리스너 제거
     return () => {
@@ -34,7 +36,7 @@ function App(): React.JSX.Element {
         <Header />
         <div className='workspace'>
           <Panel title='Live Preview' style={{ width: '70%' }}>
-            <iframe style={{ border: "None", width: "100%"}}></iframe>
+            <iframe src={url}></iframe>
           </Panel>
           <Panel title='Chat' style={{ width: '30%' }}>
             <div className="messages">
@@ -42,7 +44,7 @@ function App(): React.JSX.Element {
                 <Chat key={index} type={message.type} text={message.text} />
               ))}
             </div>
-            <div className="chat-input-area" style={{ marginTop: 'auto' }}>
+            <div className="chat-input-area">
               <textarea className="chat-input" placeholder="AI 에이전트에게 요청하세요..." rows={3} onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                   e.preventDefault();

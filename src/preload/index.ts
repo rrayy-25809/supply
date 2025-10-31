@@ -5,7 +5,7 @@ import { electronAPI } from '@electron-toolkit/preload'
 const api = {
   openFolderDialog: async () => {
     const folderPath = await ipcRenderer.invoke('dialog:openFolder');
-    ipcRenderer.send('open-folder', folderPath);
+    return folderPath;
   }
 }
 
