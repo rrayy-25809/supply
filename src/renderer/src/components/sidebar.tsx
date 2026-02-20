@@ -1,10 +1,21 @@
 import "./components.scss";
+import { useState } from "react";
 
-function Sidebar() {
+interface SidebarProps {
+  onFolderSelected?: (folder: string) => void;
+}
+
+function Sidebar({ onFolderSelected }: SidebarProps) {
+    const [selectedFolder, setSelectedFolder] = useState<string>(localStorage.getItem('projectFolder') || '');
+
     const openFolder = async () => {
         const folderPath = await window.api.openFolderDialog();
         if (folderPath) {
+            setSelectedFolder(folderPath);
+            localStorage.setItem('projectFolder', folderPath);
             window.electron.ipcRenderer.send('set_project_folder', folderPath);
+            onFolderSelected?.(folderPath);
+            console.log('✅ 프로젝트 폴더 선택됨:', folderPath);
         } else {
             alert('폴더 선택이 취소되었습니다.');
         }
@@ -23,6 +34,11 @@ function Sidebar() {
                     <span>📁</span>
                     <span>Open Folder</span>
                 </button>
+                {selectedFolder && (
+                    <div style={{ fontSize: '11px', color: '#888', marginTop: '8px', wordBreak: 'break-all', padding: '0 8px' }}>
+                        ✓ {selectedFolder.substring(selectedFolder.lastIndexOf('\\') + 1)}
+                    </div>
+                )}
             </div>
 
             <div className="git-section">

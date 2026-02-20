@@ -3,6 +3,7 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import icon from '../../resources/icon.png?asset';
 import { setfolder } from './process_manager';
 import { join } from 'path';
+import { runAgent, generateSimpleResponse } from './agent/agent_executor';
 
 function createWindow(): void {
   // Create the browser window.
@@ -72,6 +73,33 @@ app.whenReady().then(() => {
     event.sender.send('reply', `프로젝트 폴더가 설정되었습니다: ${folderPath}`);
     //event.sender.send('', );
   })
+
+  // AI 에이전트 관련 IPC 핸들러
+  ipcMain.on('agent:execute', async (event, { llmType, apiKey, message, projectFolder }) => {
+    console.log('Agent execution requested:', { llmType, message, projectFolder });
+    try {
+      await runAgent(llmType, apiKey, message, projectFolder, event);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      event.sender.send('agent:response', {
+        status: 'error',
+        message: `에러 발생: ${errorMessage}`
+      });
+    }
+  });
+
+  ipcMain.on('agent:simple', async (event, { llmType, apiKey, message }) => {
+    console.log('Simple agent response requested:', { llmType, message });
+    try {
+      await generateSimpleResponse(llmType, apiKey, message, event);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      event.sender.send('agent:response', {
+        status: 'error',
+        message: `에러 발생: ${errorMessage}`
+      });
+    }
+  });
 
   createWindow()
 

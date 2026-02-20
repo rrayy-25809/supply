@@ -6,6 +6,31 @@ const api = {
   openFolderDialog: async () => {
     const folderPath = await ipcRenderer.invoke('dialog:openFolder');
     return folderPath;
+  },
+  
+  // AI 에이전트 관련 API
+  executeAgent: (llmType: string, apiKey: string, message: string, projectFolder: string) => {
+    ipcRenderer.send('agent:execute', { llmType, apiKey, message, projectFolder });
+  },
+  
+  generateSimpleResponse: (llmType: string, apiKey: string, message: string) => {
+    ipcRenderer.send('agent:simple', { llmType, apiKey, message });
+  },
+  
+  onAgentResponse: (callback: (data: Record<string, unknown>) => void) => {
+    ipcRenderer.on('agent:response', (event, data) => callback(data));
+  },
+  
+  onAgentProgress: (callback: (data: Record<string, unknown>) => void) => {
+    ipcRenderer.on('agent:progress', (event, data) => callback(data));
+  },
+  
+  removeAgentResponseListener: () => {
+    ipcRenderer.removeAllListeners('agent:response');
+  },
+  
+  removeAgentProgressListener: () => {
+    ipcRenderer.removeAllListeners('agent:progress');
   }
 }
 
